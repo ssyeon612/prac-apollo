@@ -1,1 +1,2 @@
-console.log("server test");
+const database = require("./database");
+console.log(database.people[3]);
