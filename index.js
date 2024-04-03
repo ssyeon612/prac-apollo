@@ -7,6 +7,9 @@ const typeDefs = gql`
         equipments: [Equipment]
         supplies: [Supply]
     }
+    type Mutation {
+        deleteEquipment(id: String): Equipment
+    }
     type Team {
         id: Int
         manager: String
@@ -44,6 +47,17 @@ const resolvers = {
             })[0],
         equipments: () => database.equipments,
         supplies: () => database.supplies,
+    },
+    Mutation: {
+        deleteEquipment: (parent, args, context, info) => {
+            const deleted = database.equipments.filter((equipment) => {
+                return equipment.id === args.id;
+            })[0];
+            database.equipments = database.equipments.filter((equipment) => {
+                return equipment.id !== args.id;
+            });
+            return deleted;
+        },
     },
 };
 
