@@ -1,16 +1,17 @@
-const database = require("./database");
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
 const _ = require("lodash");
 
 const queries = require("./typedefs-resolvers/_queries");
 const mutations = require("./typedefs-resolvers/_mutations");
 const equipments = require("./typedefs-resolvers/equipments");
+const supplies = require("./typedefs-resolvers/supplies");
 
-const typeDefs = [queries, mutations, equipments.typeDefs];
+const typeDefs = [queries, mutations, equipments.typeDefs, supplies.typeDefs];
 
-const resolvers = [equipments.resolvers];
+const resolvers = [equipments.resolvers, supplies.resolvers];
 
 const server = new ApolloServer({ typeDefs, resolvers });
+
 server.listen().then(({ url }) => {
-    console.log(`🚀 Server ready at ${url}`);
+    console.log(`🚀  Server ready at ${url}`);
 });
